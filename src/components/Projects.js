@@ -14,9 +14,25 @@ import { FiHeart } from "react-icons/fi";
 import { SlPaperPlane } from "react-icons/sl";
 import { useInViewport } from "react-in-viewport";
 import React, { useRef } from "react";
+import { FaGithub } from "react-icons/fa";
 
-function Projects() {
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Button,
+  Link,
+} from "@chakra-ui/react";
+
+function Projects(data) {
   // const [isLargerThan1280] = useMediaQuery("(min-width: 1280px)");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const ref = useRef(null);
   const { enterCount } = useInViewport(
     ref,
@@ -32,30 +48,53 @@ function Projects() {
         in={enterCount > 0}
         // whileHover={{ scale: 1 }}
       >
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+            <ModalBody>{data.about}</ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
         <Box ref={ref}>
           <VStack alignItems="flex-start">
-            <HStack mb={4}>
-              <Image
-                src="https://avatars.githubusercontent.com/u/80850517?s=400&u=fd88858d67342799c62e4e2a4b3ab5fe8a6d0ec3&v=4"
-                alt="Sanit bandekar"
-                maxW={{ base: "10vw", sm: "5vw", lg: "3vw", xl: "2vw" }}
-                borderRadius="full"
-              />
-              <Text as="b" mb={2}>
-                Sanit Bandekar
-              </Text>
+            <HStack mb={4} w="100%" justifyContent="space-between">
+              <HStack>
+                <Image
+                  src="https://avatars.githubusercontent.com/u/80850517?s=400&u=fd88858d67342799c62e4e2a4b3ab5fe8a6d0ec3&v=4"
+                  alt="Sanit bandekar"
+                  maxW={{ base: "10vw", sm: "5vw", lg: "3vw", xl: "2vw" }}
+                  borderRadius="full"
+                />
+                <Text as="b" mb={2}>
+                  Sanit Bandekar
+                </Text>
+              </HStack>
+              <Link href={data.github} isExternal>
+                <FaGithub />
+              </Link>
             </HStack>
-            <Image borderRadius={4} src="https://bit.ly/dan-abramov" w="100%" />
+            <Link isExternal href="https://twitter.com/sanitbandekar">
+              <Image borderRadius={4} src={data.img} w="100%" />
+            </Link>
             <HStack m={4} justifyContent="space-between" spacing={5}>
               <Icon as={FiHeart} />
               <Icon as={FaRegComment} />
               <Icon as={SlPaperPlane} />
             </HStack>
             <HStack>
-              <Text as="b" fontSize="sm">
-                Project Name :
+              <Text noOfLines={1} onClick={onOpen}>
+                {" "}
+                <Text as="b" fontSize="sm" marginEnd={2}>
+                  {data.name}
+                </Text>
+                {data.about}
               </Text>
-              <Text>About Project</Text>
             </HStack>
           </VStack>
         </Box>

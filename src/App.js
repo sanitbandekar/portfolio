@@ -16,6 +16,7 @@ import About from "./components/About";
 import { FaGithub, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { BiCopyright } from "react-icons/bi";
 import resume from "./resume.pdf";
+import bimbifood from "./bimbifood.png";
 
 function App() {
   function getYear() {
@@ -86,7 +87,12 @@ function App() {
 
         <TabPanels minHeight="55vh">
           <TabPanel>
-            <Projects />
+            <Projects
+              img={bimbifood}
+              name="bimbi"
+              about="A new food delivery website is coming soon, and you can be a part of it. Pre-register now to help us determine the best areas to start our business. Get ready to enjoy your favorite food delivered right to your doorstep with our easy-to-use website. "
+              github="https://github.com/sanitbandekar"
+            />
             <Projects />
           </TabPanel>
           <TabPanel>
